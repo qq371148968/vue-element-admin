@@ -10,6 +10,7 @@ NProgress.configure({ showSpinner: false }) // NProgress Configuration
 
 const whiteList = ['/login', '/auth-redirect'] // no redirect whitelist
 
+// 全局前置路由守卫————初始化的时候被调用、每次路由切换之前被调用
 router.beforeEach(async(to, from, next) => {
   // start progress bar
   NProgress.start()

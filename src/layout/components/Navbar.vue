@@ -1,41 +1,62 @@
 <template>
   <div class="navbar">
+
+    <!-- 最左边的svg；控制菜单隐藏显示（.hideSidebar 样式） -->
     <hamburger id="hamburger-container" :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
+    <!-- 中间面包屑  当前路由的所有嵌套路径片段的路由记录-->
     <breadcrumb id="breadcrumb-container" class="breadcrumb-container" />
 
+    <!-- 右侧4个图标 -->
     <div class="right-menu">
       <template v-if="device!=='mobile'">
-        <search id="header-search" class="right-menu-item" />
+        <!-- 图标1:搜索 根据$store.getters.permission_routes过滤 -->
+        <el-tooltip content="这是搜索框" effect="dark" placement="bottom">
+          <search id="header-search" class="right-menu-item" />
+        </el-tooltip>
 
+        <!-- settings.js 文件中配置errorLog -->
+        <!-- https://cn.vuejs.org/v2/guide/deployment.html#%E8%B7%9F%E8%B8%AA%E8%BF%90%E8%A1%8C%E6%97%B6%E9%94%99%E8%AF%AF
+        如果在组件渲染时出现运行错误，错误将会被传递至全局 Vue.config.errorHandler 配置函数 (如果已设置)。利用这个钩子函数来配合错误跟踪服务是个不错的主意。
+         -->
         <error-log class="errLog-container right-menu-item hover-effect" />
 
+        <!-- 图标2:全屏 使用插件screenfull -->
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
 
+        <!-- 图标3:改变字体大小 -->
         <el-tooltip content="Global Size" effect="dark" placement="bottom">
           <size-select id="size-select" class="right-menu-item hover-effect" />
         </el-tooltip>
 
       </template>
 
+      <!-- 图标4:登录用户信息 -->
       <el-dropdown class="avatar-container right-menu-item hover-effect" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown">
+          <!-- 图标4-1:用户信息 -->
           <router-link to="/profile/index">
             <el-dropdown-item>Profile</el-dropdown-item>
           </router-link>
+
+          <!-- 图标4-2:回首页快速链接？ -->
           <router-link to="/">
             <el-dropdown-item>Dashboard</el-dropdown-item>
           </router-link>
+
+          <!-- 图标4-3\4:源码&文档 github链接 -->
           <a target="_blank" href="https://github.com/PanJiaChen/vue-element-admin/">
             <el-dropdown-item>Github</el-dropdown-item>
           </a>
           <a target="_blank" href="https://panjiachen.github.io/vue-element-admin-site/#/">
             <el-dropdown-item>Docs</el-dropdown-item>
           </a>
+
+          <!-- 图标4-5:退出登录 -->
           <el-dropdown-item divided @click.native="logout">
             <span style="display:block;">Log Out</span>
           </el-dropdown-item>
@@ -76,6 +97,8 @@ export default {
     },
     async logout() {
       await this.$store.dispatch('user/logout')
+      // 模板字符串 ES2015新增的符号；模板字符串的符号[`]是按键~下的符号
+      // 退出登录时把当前路由路径带过去，登录后回到当前页面
       this.$router.push(`/login?redirect=${this.$route.fullPath}`)
     }
   }

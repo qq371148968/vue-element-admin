@@ -7,7 +7,10 @@ export function getToken() {
 }
 
 export function setToken(token) {
-  return Cookies.set(TokenKey, token)
+  // 设置cookie的失效时间，默认60分钟
+  const num = 60 // 分钟
+  const time = new Date(new Date().getTime() + num * 60 * 1000)
+  return Cookies.set(TokenKey, token, { expires: time })
 }
 
 export function removeToken() {

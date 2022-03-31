@@ -1,5 +1,6 @@
 <template>
   <div>
+    <!-- svg 图片 fullscreen 既是文件名，存放在src/icons/svg-->
     <svg-icon :icon-class="isFullscreen?'exit-fullscreen':'fullscreen'" @click="click" />
   </div>
 </template>

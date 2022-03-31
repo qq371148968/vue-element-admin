@@ -2,6 +2,7 @@
   <div :class="{'has-logo':showLogo}">
     <logo v-if="showLogo" :collapse="isCollapse" />
     <el-scrollbar wrap-class="scrollbar-wrapper">
+      <!-- 菜单开始 -->
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
@@ -12,8 +13,11 @@
         :collapse-transition="false"
         mode="vertical"
       >
+        <!-- 菜单项-递归 使用 el-menu-item 和 el-submenu； 动态组件：封装了路由跳转支持外部链接（router-link 和 a 标签）-->
+        <!-- 菜单来自计算完毕的路由列表：根据用户角色过滤后的路由表，放在仓库中（计算属性permission_routes） -->
         <sidebar-item v-for="route in permission_routes" :key="route.path" :item="route" :base-path="route.path" />
       </el-menu>
+      <!-- 菜单结束 -->
     </el-scrollbar>
   </div>
 </template>

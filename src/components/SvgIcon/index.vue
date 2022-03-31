@@ -1,4 +1,6 @@
 <template>
+  <!-- Vue 提供了一个 $listeners property，它是一个对象，里面包含了作用在这个组件上的所有监听器。
+  有了这个 $listeners property，你就可以配合 v-on="$listeners" 将所有的事件监听器指向这个组件的某个特定的子元素。 -->
   <div v-if="isExternal" :style="styleExternalIcon" class="svg-external-icon svg-icon" v-on="$listeners" />
   <svg v-else :class="svgClass" aria-hidden="true" v-on="$listeners">
     <use :xlink:href="iconName" />

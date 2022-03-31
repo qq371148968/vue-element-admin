@@ -20,7 +20,6 @@ function hasPermission(roles, route) {
  */
 export function filterAsyncRoutes(routes, roles) {
   const res = []
-
   routes.forEach(route => {
     const tmp = { ...route }
     if (hasPermission(roles, tmp)) {
@@ -35,7 +34,9 @@ export function filterAsyncRoutes(routes, roles) {
 }
 
 const state = {
+  // 当前角色用户所有路由（基础+角色特有）
   routes: [],
+  // 当前角色用户特有路由（角色特有）
   addRoutes: []
 }
 
@@ -47,6 +48,7 @@ const mutations = {
 }
 
 const actions = {
+  // 根据角色重置仓库中路由信息
   generateRoutes({ commit }, roles) {
     return new Promise(resolve => {
       let accessedRoutes

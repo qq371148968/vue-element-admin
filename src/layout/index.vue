@@ -1,13 +1,25 @@
 <template>
   <div :class="classObj" class="app-wrapper">
+    <!-- 移动端时，菜单框后面的遮罩层 -->
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
+
+    <!-- 左侧菜单 -->
     <sidebar class="sidebar-container" />
+
+    <!-- 上侧导航栏 ，中间菜单标签栏，下面主页面-->
     <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
+        <!--上侧导航栏：面包屑  -->
         <navbar />
+
+        <!-- 中间菜单标签栏,可以通过“设置面板”动态显示 -->
         <tags-view v-if="needTagsView" />
       </div>
+
+      <!-- 主体页面 -->
       <app-main />
+
+      <!-- 设置区域 -->
       <right-panel v-if="showSettings">
         <settings />
       </right-panel>

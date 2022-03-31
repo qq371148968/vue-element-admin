@@ -14,7 +14,7 @@ import App from './App'
 import store from './store'
 import router from './router'
 
-import './icons' // icon
+import './icons' // icon 注册全局组件 加载svg图片
 import './permission' // permission control
 import './utils/error-log' // error log
 
@@ -45,9 +45,11 @@ Object.keys(filters).forEach(key => {
 
 Vue.config.productionTip = false
 
-new Vue({
+const vm = new Vue({
   el: '#app',
   router,
   store,
   render: h => h(App)
 })
+window.vm = vm
+

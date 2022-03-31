@@ -1,5 +1,7 @@
 <template>
   <div id="tags-view-container" class="tags-view-container">
+
+    <!-- 遍历visitedViews 生成标签 ;路由中配置了黏贴属性affix=true，则不显示该标签的删除符号(目前dashboard和documentation路由都配置黏贴属性)-->
     <scroll-pane ref="scrollPane" class="tags-view-wrapper" @scroll="handleScroll">
       <router-link
         v-for="tag in visitedViews"
@@ -16,6 +18,8 @@
         <span v-if="!isAffix(tag)" class="el-icon-close" @click.prevent.stop="closeSelectedTag(tag)" />
       </router-link>
     </scroll-pane>
+
+    <!-- 右键菜单 刷新，关闭、关闭其他、关闭所有 -->
     <ul v-show="visible" :style="{left:left+'px',top:top+'px'}" class="contextmenu">
       <li @click="refreshSelectedTag(selectedTag)">Refresh</li>
       <li v-if="!isAffix(selectedTag)" @click="closeSelectedTag(selectedTag)">Close</li>
@@ -186,6 +190,7 @@ export default {
       this.top = e.clientY
       this.visible = true
       this.selectedTag = tag
+      console.log(this)
     },
     closeMenu() {
       this.visible = false

@@ -1,6 +1,10 @@
 <template>
   <el-breadcrumb class="app-breadcrumb" separator="/">
+
+    <!-- vue 中的过渡动画 transition-group enter和leave的样式在文件src/styles/transition.scss 中定义 -->
     <transition-group name="breadcrumb">
+
+      <!-- 初始化或者路由切换时， 调用$route.matched初始化levelList；输出一个数组，包含当前路由的所有嵌套路径片段的路由记录 -->
       <el-breadcrumb-item v-for="(item,index) in levelList" :key="item.path">
         <span v-if="item.redirect==='noRedirect'||index==levelList.length-1" class="no-redirect">{{ item.meta.title }}</span>
         <a v-else @click.prevent="handleLink(item)">{{ item.meta.title }}</a>
@@ -36,6 +40,7 @@ export default {
       let matched = this.$route.matched.filter(item => item.meta && item.meta.title)
       const first = matched[0]
 
+      // 默认会把Dashboard放面包屑的第一个位置
       if (!this.isDashboard(first)) {
         matched = [{ path: '/dashboard', meta: { title: 'Dashboard' }}].concat(matched)
       }
@@ -54,7 +59,17 @@ export default {
       const { params } = this.$route
       var toPath = pathToRegexp.compile(path)
       return toPath(params)
+      /**
+       * 知识点：compile作用：快速填充 url 字符串的参数值。
+       * var pathToRegexp = require('path-to-regexp')
+       * var url = '/user/:id/:name'
+       * var data = {id: 10001, name: 'bob'}
+       * console.log(pathToRegexp.compile(url)(data))
+       * 打印结果：
+       * /user/10001/bob
+       */
     },
+    // 面包屑的点击跳转事件
     handleLink(item) {
       const { redirect, path } = item
       if (redirect) {
